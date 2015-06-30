@@ -36,7 +36,7 @@ function WelcomeBack()
    elseif 22 <= t && t <= 24
       let message = 'そろそろおやすみの時間です おやすみなさい'
    endif
-   let message = strftime("%H") . "時ですか " . message
+   let message = '阿古 < ' . strftime("%H") . "時ですか " . message
    echo message
 endfunction
 
