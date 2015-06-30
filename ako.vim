@@ -1,6 +1,6 @@
 " 結局global な vitalに
-let s:V = vital#of('vital')
-let s:Random = s:V.import('Random')
+let s:V = vital#of("vital")
+let s:Random = s:V.import("Random")
 
 " Insertモードで改行したとき
 inoremap <CR> <Esc>:call NewLine()<CR>a<CR>
@@ -9,37 +9,55 @@ inoremap <CR> <Esc>:call NewLine()<CR>a<CR>
 autocmd VimEnter * :call WelcomeBack()
 
 " 保存した時
-autocmd BufWritePost * echom '保存しました! お疲れ様です'
+autocmd BufWritePost * echom "保存しました! お疲れ様です。"
+autocmd BufWritePost * :call CheckLineByte(80)
 
 function NewLine()
-  echom '改行しました'
+  echom "改行しました"
 endfunction
 
 function WelcomeBack()
    let t =  str2nr(strftime("%H"))
    if 0 <= t && t < 5
-     let message = 'こんな時間に起きていて大丈夫ですか……？'
+     let message = "こんな時間に起きていて大丈夫ですか……？"
    elseif 5 <= t && t < 10
-      let message = 'おはようございます'
+      let message = "おはようございます"
    elseif 10 <= t && t < 12
-      let message = 'もうすぐお昼ですよ'
+      let message = "もうすぐお昼ですよ"
    elseif 12 <= t && t < 14
-      let message = 'お昼は食べましたか'
+      let message = "お昼は食べましたか"
    elseif 14 <= t && t < 16
-      let message = 'お昼寝してます……...zzZZ'
+      let message = "お昼寝してます……...zzZZ"
    elseif 16 <= t && t < 18
-      let message = 'そろそろお腹が空いてきました'
+      let message = "そろそろお腹が空いてきました"
    elseif 18 <= t && t < 20
-      let message = '晩ご飯のお時間です！'
+      let message = "晩ご飯のお時間です！"
    elseif 20 <= t && t < 22
-      let message = '夜ですね'
+      let message = "夜ですね"
    elseif 22 <= t && t <= 24
-      let message = 'そろそろおやすみの時間です おやすみなさい'
+      let message = "そろそろおやすみの時間です おやすみなさい"
    endif
-   let message = '阿古 < ' . strftime("%H") . "時ですか " . message
-   echo message
+   echo "阿古 < おかえりなさい ".strftime("%H")."時ですか\n"."       ".message
 endfunction
 
+" a:maxByteバイト以上だったら警告してくれる関数
+function CheckLineByte(maxByte)
+  let all = getline(1,"$")
+  let overline = []
+  for line in all
+    if a:maxByte < strlen(line)
+      call add(overline, index(all, line)+1)
+    endif
+  endfor
+  if len(overline) > 0
+    echo "[warning] ".join(overline, ",")." 行目が".a:maxByte."byteを超えています！"
+  else
+    echo "いい感じですよ。"
+  endif
+endfunction
+
+
+" ---------------------------------------------------------------------"
 " messages
 let s:messages = ["おはようございます", "今日も頑張りましょう"]
 
@@ -47,7 +65,7 @@ let s:messages = ["おはようございます", "今日も頑張りましょう
 let s:faces = ["(✿╹◡╹)", "٩(*'ω'*)و", "(⋈◍＞◡＜◍)。✧♡", "(*σｖσ*)",
       \ "+。:.ﾟ٩(๑＞◡＜๑)۶:.｡+ﾟ"]
 
-function! Ohayo()
+function Ohayo()
   let m_length = len(s:messages)
   let f_length = len(s:faces)
 
@@ -57,6 +75,6 @@ function! Ohayo()
   echo message
 endfunction
 
-function! Nyan()
-  echo '阿古 < にゃーん (ΦωΦ*)'
+function Nyan()
+  echo "阿古 < にゃーん (ΦωΦ*)"
 endfunction
