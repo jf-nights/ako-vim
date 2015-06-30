@@ -33,7 +33,7 @@ function WelcomeBack()
    elseif 18 <= t && t < 20
       let message = "晩ご飯のお時間です！"
    elseif 20 <= t && t < 22
-      let message = "夜ですね"
+      let message = "夜も更けてまいりました"
    elseif 22 <= t && t <= 24
       let message = "そろそろおやすみの時間です おやすみなさい"
    endif
