@@ -3,6 +3,7 @@ let s:V = vital#of('vital')
 let s:Random = s:V.import('Random')
 
 " Insertモードで改行したとき
+inoremap <CR> <Esc>:call NewLine()<CR>a<CR>
 
 " start vim
 autocmd VimEnter * :call WelcomeBack()
