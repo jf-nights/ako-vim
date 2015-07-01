@@ -2,21 +2,11 @@
 let s:V = vital#of("vital")
 let s:Random = s:V.import("Random")
 
-" Insertモードで改行したとき
-inoremap <CR> <Esc>:call NewLine()<CR>a<CR>
-
-" start vim
-autocmd VimEnter * :call WelcomeBack()
-
-" 保存した時
-autocmd BufWritePost * echom "保存しました! お疲れ様です。"
-autocmd BufWritePost * :call CheckLineByte(80)
-
-function NewLine()
+function! akosan#NewLine()
   echom "改行しました"
 endfunction
 
-function WelcomeBack()
+function! akosan#WelcomeBack()
    let t =  str2nr(strftime("%H"))
    if 0 <= t && t < 5
      let message = "こんな時間に起きていて大丈夫ですか……？"
@@ -41,7 +31,7 @@ function WelcomeBack()
 endfunction
 
 " a:maxByteバイト以上だったら警告してくれる関数
-function CheckLineByte(maxByte)
+function! akosan#CheckLineByte(maxByte)
   let all = getline(1,"$")
   let overline = []
   for line in all
@@ -56,8 +46,13 @@ function CheckLineByte(maxByte)
   endif
 endfunction
 
+" ---------------------------------------------------------
+"  関数を呼ぶコマンドを定義
+command! Ohayo :call akosan#Ohayo()
+command! Nyan :call akosan#Nyan()
 
-" ---------------------------------------------------------------------"
+
+" ---------------------------------------------------------
 " messages
 let s:messages = ["おはようございます", "今日も頑張りましょう"]
 
@@ -65,7 +60,7 @@ let s:messages = ["おはようございます", "今日も頑張りましょう
 let s:faces = ["(✿╹◡╹)", "٩(*'ω'*)و", "(⋈◍＞◡＜◍)。✧♡", "(*σｖσ*)",
       \ "+。:.ﾟ٩(๑＞◡＜๑)۶:.｡+ﾟ"]
 
-function Ohayo()
+function! akosan#Ohayo()
   let m_length = len(s:messages)
   let f_length = len(s:faces)
 
@@ -75,6 +70,6 @@ function Ohayo()
   echo message
 endfunction
 
-function Nyan()
+function! akosan#Nyan()
   echo "阿古 < にゃーん (ΦωΦ*)"
 endfunction
