@@ -1,5 +1,5 @@
 " 結局global な vitalに
-let s:V = vital#of("vital")
+let s:V = vital#of("akosan")
 let s:Random = s:V.import("Random")
 
 function! akosan#NewLine()

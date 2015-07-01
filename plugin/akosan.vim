@@ -1,7 +1,3 @@
-" 結局global な vitalに
-let s:V = vital#of("vital")
-let s:Random = s:V.import("Random")
-
 " Insertモードで改行したとき
 inoremap <CR> <Esc>:call akosan#NewLine()<CR>a<CR>
 
